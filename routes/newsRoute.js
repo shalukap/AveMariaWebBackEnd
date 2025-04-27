@@ -1,5 +1,5 @@
 import express from "express";
-import { addNews, getAllNews,getCurrentNews,updateNews } from "../controllers/newsController.js";
+import { addNews, getAllNews,getCurrentNews,updateNews,deleteNews } from "../controllers/newsController.js";
 
 
 
@@ -9,6 +9,7 @@ newsRouter.get("/",getAllNews);
 newsRouter.get("/:id",getCurrentNews);
 newsRouter.post("/",addNews);
 newsRouter.put("/:id",updateNews);
+newsRouter.delete("/:id",deleteNews);
 //newsRouter.post("/upload",uploadMiddleware,uploadFiles);
 
 export default newsRouter;

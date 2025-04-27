@@ -27,7 +27,7 @@ export async function addCalenderEvent(req, res) {
     const data=req.body
     data.cid=cid
     data.enterdBy=user.name
-    console.log(data);
+   
     
     let calender=new Calender(data);
     await calender.save().then(() => {
@@ -54,6 +54,25 @@ export async function getCurrentCalenderEvent(req, res) {
     const id=req.params.id
     await Calender.find({cid:id}).then((result) => {
         res.json(result);
+    }).catch((err) => {
+        res.json(err)
+    })
+}
+
+export async function deleteCalenderEvent(req, res) {
+    const user=req.user;   
+    if (!user) {
+        res.status(401).json({ msg: "Please login" });
+        return
+    }
+    if (user.role != "Admin") {
+        res.status(401).json({ msg: "Please login as Authorized" });
+        return
+    }
+    
+    const id=req.params.id
+    await Calender.deleteOne({cid:id}).then(() => {
+        res.json("Calender Event Deleted")
     }).catch((err) => {
         res.json(err)
     })

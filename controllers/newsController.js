@@ -107,6 +107,25 @@ export async function updateNews(req, res) {
     })
 }
 
+export async function deleteNews(req, res) {
+     
+    const user=req.user;   
+    if (!user) {
+        res.status(401).json({ msg: "Please login" });
+        return
+    }
+    if (user.role != "Admin") {
+        res.status(401).json({ msg: "Please login as Authorized" });
+        return
+    }
+    const id=req.params.id
+    await News.deleteOne({nid:id}).then(()=>{
+        res.json("News Deleted Successfully")
+    }).catch((err)=>{
+        res.json(err)
+    })
+}
+
 export async function uploadFiles(req, res) {
     
     const { files } = req.body;

@@ -27,11 +27,21 @@ const storage = multer.diskStorage({
 */
 
 export function getAllNews(req, res) {
-    News.find().sort({nid:-1}).then((result) => {
-        res.json(result);
-    }).catch((err) => {
-        res.json(err)
-    })
+    const user=req.user;
+    if (!user) {
+        News.find({isApproved:true}).sort({nid:-1}).then((result) => {
+            res.json(result);
+        }).catch((err) => {
+            res.json(err)
+        })
+    }else{
+        News.find().sort({nid:-1}).then((result) => {
+            res.json(result);
+        }).catch((err) => {
+            res.json(err)
+        })
+
+    }
 }
 
 export async function addNews(req, res) {   
@@ -67,17 +77,8 @@ export async function addNews(req, res) {
 }
 
 export async function getCurrentNews(req, res) {    
-    const user=req.user;          
-    if (!user) {
-        res.status(401).json({ msg: "Please login" });
-        return
-    }
-    if (user.role != "Admin" && user.role != "Author" && user.role != "Photographer") {
-        res.status(401).json({ msg: "Please login as Authorized" });
-        return
-    }
-    const id=req.params.id        
-   await News.find({nid:id}).then((result) => {
+    const id=req.params.id          
+   await News.findOne({nid:id}).then((result) => {
         res.json(result);    
         
     }).catch((err) => {

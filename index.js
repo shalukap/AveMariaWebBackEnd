@@ -10,6 +10,7 @@ import calenderRouter from "./routes/calenderRoute.js";
 import cookieParser from "cookie-parser";
 import path from "path";
 import { fileURLToPath } from "url";
+import societyRouter from "./routes/societyRoute.js";
 
 dotenv.config();
 
@@ -51,6 +52,8 @@ connection.once("open", () => {
 })
 app.use("/api/news",newsRouter);
 app.use("/api/calender",calenderRouter);
+app.use("/api/society",societyRouter);
+
 
 
 app.listen(3000, () => {

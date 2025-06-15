@@ -49,6 +49,15 @@ export default userRouter;
     "password": "davidpass789",
     "role": "Admin",
     "phone": "+1444333222"
+  },
+
+  {
+    "name": "Shaluka Perera",
+    "email": "shaluka@gmail.com",
+    "password": "abc123",
+    "role": "Admin",
+    "phone": "123-456-7890"
   }
+    
 ]
 */

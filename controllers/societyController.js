@@ -1,4 +1,4 @@
-import Society from '../models/societyModel.js'
+import Society from '../models/SocietyModel.js'
 
 export function getAllSocieties(req, res) {
     Society.find().then((result) => {

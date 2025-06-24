@@ -1,3 +1,4 @@
+import { log } from "console";
 import Calender from "../models/CalenderModel.js";
 import jwt from "jsonwebtoken";
 
@@ -10,12 +11,15 @@ export function getAllCalenderEvents(req, res) {
     })
 }
 
-export async function addCalenderEvent(req, res) {       
+export async function addCalenderEvent(req, res) {  
+    /*     
     const user=req.user; 
     if(user.role!="Admin"){
         res.status(401).json({msg:"Please login as admin"});
         return;
-    }
+    }*/
+   const user=req.user;
+    
     let lastCId=await Calender.find().sort({cid:-1}).limit(1);   
     let cid=""
     if(lastCId.length==0){
@@ -61,14 +65,14 @@ export async function getCurrentCalenderEvent(req, res) {
 
 export async function deleteCalenderEvent(req, res) {
     const user=req.user;   
-    if (!user) {
+    /*if (!user) {
         res.status(401).json({ msg: "Please login" });
         return
     }
     if (user.role != "Admin") {
         res.status(401).json({ msg: "Please login as Authorized" });
         return
-    }
+    }*/
     
     const id=req.params.id
     await Calender.deleteOne({cid:id}).then(() => {

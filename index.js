@@ -11,6 +11,7 @@ import cookieParser from "cookie-parser";
 import path from "path";
 import { fileURLToPath } from "url";
 import societyRouter from "./routes/societyRoute.js";
+import sportsRouter from "./routes/sportsRoute.js";
 
 dotenv.config();
 
@@ -53,10 +54,11 @@ connection.once("open", () => {
 app.use("/api/news",newsRouter);
 app.use("/api/calender",calenderRouter);
 app.use("/api/society",societyRouter);
+app.use("/api/sport",sportsRouter);
 
 
 
 app.listen(5000, () => {
-    console.log("Server is running on port 3000");
+    console.log("Server is running on port 5000");
 });
 

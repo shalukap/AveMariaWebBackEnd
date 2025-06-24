@@ -60,4 +60,11 @@ export default userRouter;
   }
     
 ]
+
+ {
+        
+        "email":"shaluka@gmail.com",
+        "password":"abc123"
+     
+    }
 */

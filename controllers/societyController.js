@@ -8,16 +8,37 @@ export function getAllSocieties(req, res) {
     })
 }
 
-export function getCurrentSociety(req, res) {
+
+
+export async function getCurrentSociety(req, res) {
     const id=req.params.id
-    Society.find({socid:id}).then((result) => {
+    await Society.find({socid:id}).then((result) => {
         res.json(result);
     }).catch((err) => {
         res.json(err)
     })
 }
-export function addSociety(req, res) {
+export async function addSociety(req, res) {
+    const user=req.user;
+    if (!user) {
+        res.status(401).json({ msg: "Please login" });
+        return
+    }
+    if (user.role != "Admin" && user.role != "Author" && user.role != "Photographer") {
+        res.status(401).json({ msg: "Please login as Authorized" });
+        return
+    }
+    let lastId=await Society.find().sort({socid:-1}).limit(1);
+    let socid=""
+    if(lastId.length==0){
+        socid="SOCID001";
+    }else{
+        lastId=lastId[0].socid;
+        socid="SOCID"+(parseInt(lastId.substring(3))+1).toString().padStart(5,"0");
+    }
+
     const data=req.body
+    data.socid=socid
     let society=new Society(data)
     society.save().then(() => {
         res.json("New Society Added")
